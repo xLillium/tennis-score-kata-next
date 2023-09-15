@@ -15,7 +15,12 @@ export function TennisGameClient() {
         }
 
         if (scoreP1 >= 3 && scoreP2 >= 3) {
-            return "Deuce";
+            if (scoreP1 === scoreP2) {
+                return "Deuce";
+            } else if (scoreP1 > scoreP2) {
+                return "Advantage Player 1";
+            }
+            return "Advantage Player 2";
         }
 
         return `${convertScore(scoreP1)} - ${convertScore(scoreP2)}`;

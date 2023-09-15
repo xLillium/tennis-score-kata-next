@@ -67,6 +67,22 @@ describe('TennisGame', () => {
         });
     });
 
+    describe('Game reaching Advantage', () => {
+        it('should display "Advantage Player 1" when Player 1 scores one more point after Deuce', () => {
+            scorePointsFor(1, 3);
+            scorePointsFor(2, 3);
+            scorePointsFor(1, 1);  // Player 1 takes the lead after deuce
+            expect(getByText('Advantage Player 1')).toBeInTheDocument();
+        });
+
+        it('should display "Advantage Player 2" when Player 2 scores one more point after Deuce', () => {
+            scorePointsFor(1, 3);
+            scorePointsFor(2, 3);
+            scorePointsFor(2, 1);  // Player 2 takes the lead after deuce
+            expect(getByText('Advantage Player 2')).toBeInTheDocument();
+        });
+    });
+
     function scorePointsFor(player, times) {
         const buttonText = `+1 Point for Player ${player}`;
         for (let i = 0; i < times; i++) {
