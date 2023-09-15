@@ -29,6 +29,14 @@ describe('TennisGame', () => {
         expect(getByText('40 - 0')).toBeInTheDocument();
     });
 
+    it('should display "Game Player 1" when Player 1 scores after 40-0', () => {
+        const { getByText } = render(<TennisGame />);
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        expect(getByText('Game Player 1')).toBeInTheDocument();
+    });
 
 });
 
