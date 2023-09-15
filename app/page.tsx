@@ -1,9 +1,10 @@
-import styles from './page.module.css'
+import styles from './page.module.css';
+import { TennisGameClient } from './TennisGameClient';
 
 export default function TennisGame() {
     return (
         <main className={styles.main}>
-            <div>0 - 0</div>
+            <TennisGameClient />
         </main>
-    )
+    );
 }
