@@ -7,8 +7,12 @@ export function TennisGameClient() {
     const [player1Score, setPlayer1Score] = useState(0);
 
     const givePointToPlayer1 = () => {
-        setPlayer1Score(15);
-    };
+        if (player1Score === 0) {
+            setPlayer1Score(15);
+        } else if (player1Score === 15) {
+            setPlayer1Score(30);
+        }
+    }
 
     return (
         <div>
