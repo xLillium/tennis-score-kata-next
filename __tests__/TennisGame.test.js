@@ -3,70 +3,60 @@ import '@testing-library/jest-dom'
 import TennisGame from '../app/page';
 
 describe('TennisGame', () => {
+    let getByText;
+
+    beforeEach(() => {
+        const rendered = render(<TennisGame />);
+        getByText = rendered.getByText;
+    });
+
     it('should display "0 - 0" when game starts', () => {
-        const { getByText } = render(<TennisGame />);
         expect(getByText('0 - 0')).toBeInTheDocument();
     });
 
-    it('should display "15 - 0" when Player 1 scores', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer1(1, getByText);
-        expect(getByText('15 - 0')).toBeInTheDocument();
+    describe('Player 1 winning the perfect game', () => {
+        it('should display "15 - 0" when Player 1 scores', () => {
+            scorePointsFor(1, 1);
+            expect(getByText('15 - 0')).toBeInTheDocument();
+        });
+
+        it('should display "30 - 0" when Player 1 scores twice', () => {
+            scorePointsFor(1, 2);
+            expect(getByText('30 - 0')).toBeInTheDocument();
+        });
+
+        it('should display "40 - 0" when Player 1 scores thrice', () => {
+            scorePointsFor(1, 3);
+            expect(getByText('40 - 0')).toBeInTheDocument();
+        });
+
+        it('should display "Game Player 1" when Player 1 scores after 40-0', () => {
+            scorePointsFor(1, 4);
+            expect(getByText('Game Player 1')).toBeInTheDocument();
+        });
     });
 
-    it('should display "30 - 0" when Player 1 scores twice', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer1(2, getByText);
-        expect(getByText('30 - 0')).toBeInTheDocument();
+    describe('Player 2 winning the perfect game', () => {
+        it('should display "0 - 15" when Player 2 scores', () => {
+            scorePointsFor(2, 1);
+            expect(getByText('0 - 15')).toBeInTheDocument();
+        });
+
+        it('should display "0 - 30" when Player 2 scores twice', () => {
+            scorePointsFor(2, 2);
+            expect(getByText('0 - 30')).toBeInTheDocument();
+        });
+
+        it('should display "0 - 40" when Player 2 scores thrice', () => {
+            scorePointsFor(2, 3);
+            expect(getByText('0 - 40')).toBeInTheDocument();
+        });
     });
 
-    it('should display "40 - 0" when Player 1 scores thrice', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer1(3, getByText);
-        expect(getByText('40 - 0')).toBeInTheDocument();
-    });
-
-    it('should display "Game Player 1" when Player 1 scores after 40-0', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer1(4, getByText);
-        expect(getByText('Game Player 1')).toBeInTheDocument();
-    });
-
-
-    it('should display "0 - 15" when Player 2 scores', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer2(1, getByText);
-        expect(getByText('0 - 15')).toBeInTheDocument();
-    });
-
-    it('should display "0 - 30" when Player 2 scores twice', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer2(2, getByText);
-        expect(getByText('0 - 30')).toBeInTheDocument();
-    });
-
-    it('should display "0 - 40" when Player 2 scores thrice', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer2(3, getByText);
-        expect(getByText('0 - 40')).toBeInTheDocument();
-    });
-
-    it('should display "Game Player 2" when Player 2 scores after 0-40', () => {
-        const { getByText } = render(<TennisGame />);
-        pointForPlayer2(4, getByText);
-        expect(getByText('Game Player 2')).toBeInTheDocument();
-    });
-
+    function scorePointsFor(player, times) {
+        const buttonText = `+1 Point for Player ${player}`;
+        for (let i = 0; i < times; i++) {
+            fireEvent.click(getByText(buttonText));
+        }
+    }
 });
-
-function pointForPlayer1(times, getByText) {
-    for (let i = 0; i < times; i++) {
-        fireEvent.click(getByText('+1 Point for Player 1'));
-    }
-}
-
-function pointForPlayer2(times, getByText) {
-    for (let i = 0; i < times; i++) {
-        fireEvent.click(getByText('+1 Point for Player 2'));
-    }
-}
