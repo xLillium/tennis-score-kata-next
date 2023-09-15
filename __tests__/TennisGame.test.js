@@ -53,6 +53,14 @@ describe('TennisGame', () => {
         });
     });
 
+    describe('Game reaching Deuce', () => {
+        it('should display "Deuce" when both players score thrice', () => {
+            scorePointsFor(1, 3);
+            scorePointsFor(2, 3);
+            expect(getByText('Deuce')).toBeInTheDocument();
+        });
+    });
+
     function scorePointsFor(player, times) {
         const buttonText = `+1 Point for Player ${player}`;
         for (let i = 0; i < times; i++) {
