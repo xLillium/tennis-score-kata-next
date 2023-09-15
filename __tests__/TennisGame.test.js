@@ -59,6 +59,12 @@ describe('TennisGame', () => {
             scorePointsFor(2, 3);
             expect(getByText('Deuce')).toBeInTheDocument();
         });
+
+        it('should display "Deuce" even if both players score more than thrice but remain equal', () => {
+            scorePointsFor(1, 4);
+            scorePointsFor(2, 4);
+            expect(getByText('Deuce')).toBeInTheDocument();
+        });
     });
 
     function scorePointsFor(player, times) {

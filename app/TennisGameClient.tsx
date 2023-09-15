@@ -14,7 +14,7 @@ export function TennisGameClient() {
             return "Game Player 2";
         }
 
-        if (scoreP1 == 3 && scoreP2 == 3) {
+        if (scoreP1 >= 3 && scoreP2 >= 3) {
             return "Deuce";
         }
 
