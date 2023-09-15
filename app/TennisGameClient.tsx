@@ -1,43 +1,52 @@
-
 'use client'
 
 import React, { useState } from 'react';
 
+
 export function TennisGameClient() {
-    const [player1Score, setPlayer1Score] = useState(0);
-    const [player2Score, setPlayer2Score] = useState(0);
-    const [gameState, setGameState] = useState("");
+    const [scoreP1, setScoreP1] = useState(0);
+    const [scoreP2, setScoreP2] = useState(0);
 
-    const givePointToPlayer1 = () => {
-        if (player1Score === 0) {
-            setPlayer1Score(15);
-        } else if (player1Score === 15) {
-            setPlayer1Score(30);
-        } else if (player1Score === 30) {
-            setPlayer1Score(40);
-        } else {
-            setGameState("Game Player 1");
+    const computeGameState = () => {
+        if (scoreP1 >= 4 && (scoreP1 - scoreP2) >= 2) {
+            return "Game Player 1";
+        } else if (scoreP2 >= 4 && (scoreP2 - scoreP1) >= 2) {
+            return "Game Player 2";
+        }
+
+        return `${convertScore(scoreP1)} - ${convertScore(scoreP2)}`;
+    }
+
+    const convertScore = (score: number) => {
+        switch (score) {
+            case 0:
+                return "0";
+            case 1:
+                return "15";
+            case 2:
+                return "30";
+            case 3:
+                return "40";
+            default:
+                return "";
         }
     }
 
-    const givePointToPlayer2 = () => {
-        if (player2Score === 0) {
-            setPlayer2Score(15);
-        } else if (player2Score === 15) {
-            setPlayer2Score(30);
-        } else if (player2Score === 30) {
-            setPlayer2Score(40);
+    const givePointToPlayer = (player: number) => {
+        if (player === 1) {
+            setScoreP1(scoreP1 + 1);
         } else {
-            setGameState("Game Player 2");
+            setScoreP2(scoreP2 + 1);
         }
-    }
+    };
+
     return (
         <div>
             <div>
-                {gameState ? gameState : `${player1Score} - ${player2Score}`}
+                {computeGameState()}
             </div>
-            <button onClick={givePointToPlayer1}>+1 Point for Player 1</button>
-            <button onClick={givePointToPlayer2}>+1 Point for Player 2</button>
+            <button onClick={() => givePointToPlayer(1)}>+1 Point for Player 1</button>
+            <button onClick={() => givePointToPlayer(2)}>+1 Point for Player 2</button>
         </div>
     );
 }
