@@ -16,13 +16,19 @@ describe('TennisGame', () => {
 
     it('should update the score to 30 - 0 when player 1 scores twice', () => {
         const { getByText } = render(<TennisGame />);
-
-        // Simulate two consecutive clicks
         fireEvent.click(getByText('+1 Point for Player 1'));
         fireEvent.click(getByText('+1 Point for Player 1'));
-
         expect(getByText('30 - 0')).toBeInTheDocument();
     });
+
+    it('should update the score to 40 - 0 when player 1 scores thrice', () => {
+        const { getByText } = render(<TennisGame />);
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        fireEvent.click(getByText('+1 Point for Player 1'));
+        expect(getByText('40 - 0')).toBeInTheDocument();
+    });
+
 
 });
 

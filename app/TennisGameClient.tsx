@@ -11,6 +11,8 @@ export function TennisGameClient() {
             setPlayer1Score(15);
         } else if (player1Score === 15) {
             setPlayer1Score(30);
+        } else {
+            setPlayer1Score(40);
         }
     }
 
